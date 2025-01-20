@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { Producto } from '../../../models/Producto';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-products-index',
@@ -12,13 +14,41 @@ import { RouterModule } from '@angular/router';
   templateUrl: './products-index.component.html',
   styleUrl: './products-index.component.css'
 })
-export class ProductsIndexComponent {
+export class ProductsIndexComponent implements OnInit {
 
-  products: any[] = [
-    {name: "Product 1", price: 100, description: "This is a product", category: "Category 1"},
-    {name: "Product 2", price: 200, description: "This is a product", category: "Category 2"},
-    {name: "Product 3", price: 300, description: "This is a product", category: "Category 3"},
-    {name: "Product 4", price: 400, description: "This is a product", category: "Category 4"},
-  ];
+  product_list: Producto[] = [];
+
+  isLoading = true;
+  isError = false;
+
+  constructor(
+    private dataService: DataService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.loadProducts();
+  }
+
+  loadProducts() {
+    this.isLoading = true;
+    this.isError = false;
+    this.dataService.getProducts().subscribe({
+      next: (data: {products: Producto[]}) => {
+        this.product_list = data.products;
+        this.isLoading = false;
+        this.isError = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.isLoading = false;
+        this.isError = true
+      }
+    });
+  }
+
+  goToProduct(id: number) {
+    this.router.navigate(['products', id]);
+  }
 
 }
