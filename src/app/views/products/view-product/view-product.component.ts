@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DataService } from '../../../services/data.service';
 import { Producto } from '../../../models/Producto';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 
 @Component({
   selector: 'app-view-product',
@@ -22,7 +22,8 @@ export class ViewProductComponent implements OnInit {
   constructor(
     private dataService: DataService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _location: Location
   ) { }
 
   ngOnInit(): void {
@@ -52,7 +53,15 @@ export class ViewProductComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['products']);
+    this._location.back();
+  }
+
+  goToEdit() {
+    this.router.navigate(['products/edit', this.product_id]);
+  }
+
+  goToDelete() {
+    this.router.navigate(['products/delete', this.product_id]);
   }
 
 }

@@ -1,6 +1,9 @@
 <h2>Lista de productos</h2>
 
 <div class="card card-body mt-4">
+    <div class="d-flex justify-content-end">
+        <button class="btn btn-primary" routerLink="/products/create"><i class="bi bi-plus"></i> Crear producto</button>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -19,8 +22,8 @@
                 <td>{{ product.categoria }}</td>
                 <td class="column-btns">
                     <button class="btn btn-primary" (click)="goToProduct(product.id)"><i class="bi bi-eye"></i> Ver</button>
-                    <button class="btn btn-warning ms-2"><i class="bi bi-pencil"></i> Editar</button>
-                    <button class="btn btn-danger ms-2"><i class="bi bi-trash"></i> Eliminar</button>
+                    <button class="btn btn-warning ms-2" (click)="goToEdit(product.id)"><i class="bi bi-pencil"></i> Editar</button>
+                    <button class="btn btn-danger ms-2" (click)="goToDelete(product.id)"><i class="bi bi-trash"></i> Eliminar</button>
                 </td>
             </tr>
         </tbody>

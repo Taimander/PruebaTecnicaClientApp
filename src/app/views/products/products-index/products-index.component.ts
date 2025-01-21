@@ -10,7 +10,7 @@ import { DataService } from '../../../services/data.service';
   imports: [
     CommonModule,
     RouterModule
-  ],
+],
   templateUrl: './products-index.component.html',
   styleUrl: './products-index.component.css'
 })
@@ -49,6 +49,14 @@ export class ProductsIndexComponent implements OnInit {
 
   goToProduct(id: number) {
     this.router.navigate(['products', id]);
+  }
+
+  goToEdit(id: number) {
+    this.router.navigate(['products/edit', id]);
+  }
+
+  goToDelete(id: number) {
+    this.router.navigate(['products/delete', id]);
   }
 
 }

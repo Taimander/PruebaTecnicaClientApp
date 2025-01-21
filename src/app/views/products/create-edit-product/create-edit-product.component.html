@@ -1,0 +1,45 @@
+<span (click)="back()" style="cursor: pointer;"><i class="bi bi-arrow-left"></i> Volver</span>
+<h2>{{isEditing ? 'Editar': 'Crear'}} producto</h2>
+
+<div *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+
+<div *ngIf="isError">
+    <div class="alert alert-danger" role="alert">
+        Ha ocurrido un error al cargar los datos.
+    </div>
+</div>
+
+<div *ngIf="!isLoading && !isError">
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" formControlName="nombre" [class]="isInvalid('nombre') ? 'is-invalid' : ''">
+            <small *ngIf="isInvalid('nombre')" class="text-danger">Ingrese un nombre válido</small>
+        </div>
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <input type="text" class="form-control" id="categoria" formControlName="categoria" [class]="isInvalid('categoria') ? 'is-invalid' : ''">
+            <small *ngIf="isInvalid('categoria')" class="text-danger">Ingrese una categoría válida</small>
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="precio" formControlName="precio" [class]="isInvalid('precio') ? 'is-invalid' : ''">
+            <small *ngIf="isInvalid('precio')" class="text-danger">Ingrese un precio válido</small>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea class="form-control" id="descripcion" formControlName="descripcion" [class]="isInvalid('descripcion') ? 'is-invalid' : ''"></textarea>
+            <small *ngIf="isInvalid('descripcion')" class="text-danger">Ingrese una descripción válida</small>
+        </div>
+        <button type="submit" class="btn btn-primary" *ngIf="!saving">Guardar</button>
+        <button class="btn btn-primary" *ngIf="saving" disabled><span class="spinner-border spinner-border-sm"></span> Guardando...</button>
+        <div class="alert alert-danger mt-2" *ngIf="saveError">
+            Ha ocurrido un error al guardar los datos. Por favor, verifique los datos e intente nuevamente.
+        </div>
+    </form>
+
+</div>
