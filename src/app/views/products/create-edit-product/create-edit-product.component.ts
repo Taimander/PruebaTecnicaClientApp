@@ -37,6 +37,7 @@ export class CreateEditProductComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    // If its the url for editing a product, load the product
     if(this.activatedRoute.snapshot.url[1].path === 'edit') {
       this.isEditing = true;
       this.productId = this.activatedRoute.snapshot.params['id'];
@@ -46,6 +47,7 @@ export class CreateEditProductComponent implements OnInit {
       }
       this.loadProduct();
     }else {
+      // Else, create a new product
       this.createForm('', 0, '', '');
       this.isLoading = false;
       this.isError = false;
@@ -84,10 +86,12 @@ export class CreateEditProductComponent implements OnInit {
   }
 
   submit() {
+    // Mark all fields as touched to show errors
     this.form.markAllAsTouched();
-    if (this.form.valid) {
-      console.log(this.form.value);
+    if (this.form.invalid) {
+      return;
     }
+    this.saveError = false;
     this.saving = true;
     if(this.isEditing) {
       this.updateProduct();

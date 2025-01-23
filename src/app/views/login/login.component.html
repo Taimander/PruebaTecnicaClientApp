@@ -13,7 +13,8 @@
                 <input type="Password" class="form-control" formControlName="Password" id="Password" placeholder="Contraseña">
                 <small class="text-danger" *ngIf="form.get('Password')?.touched && form.get('Password')?.invalid">La contraseña es requerida</small>
             </div>
-            <small class="text-danger" *ngIf="isError">Credenciales incorrectas. Vuelva a intentarlo.</small>
+            <small class="text-danger" *ngIf="invalidCredentials">Credenciales incorrectas. Vuelva a intentarlo.</small>
+            <small class="text-danger" *ngIf="isError">Ha ocurrido un error. Vuelva a intentarlo.</small>
             <br>
             <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
         </form>

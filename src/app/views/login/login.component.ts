@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   form!: FormGroup;
 
+  invalidCredentials: boolean = false;
   isError: boolean = false;
 
   constructor(
@@ -31,7 +32,7 @@ export class LoginComponent implements OnInit {
 
   submit() {
     this.isError = false;
-    this.form.markAllAsTouched();
+    this.form.markAllAsTouched(); // Mark all fields as touched to show errors
     if (this.form.invalid) {
       return;
     }
@@ -40,8 +41,14 @@ export class LoginComponent implements OnInit {
         this.authService.saveToken(res['token']);
         this.router.navigate(['/products']);
       },
-      error: () => {
-        this.isError = true;
+      error: (err) => {
+        console.log(err);
+        if (err.status === 401) {
+          this.invalidCredentials = true;
+        }else {
+          this.isError = true;
+        }
+        
       }
     });
   }
